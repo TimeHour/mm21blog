@@ -11,14 +11,24 @@
                             <span class="label-text">Title</span>
 
                         </label>
-                        <input name="title" type="text" placeholder="Article Title" class="input input-bordered w-full "/>
+                        <input name="title" type="text" placeholder="Article Title" class="input input-bordered w-full @error('title') input-error @enderror"/>
+                        @error('title')
+                            <label class="label">
+                                <span class="label-text-alt text-error">{{$message}}</span>
 
+                            </label>
+                        @enderror
                     </div>
                     <div class="form-control w-full">
                         <label class="label">
                             <span class="label-text">Content</span>
                         </label>
-                        <textarea name="body" class="textarea textarea-bordered" placeholder="Content here"></textarea>
+                        <textarea name="body" class="textarea textarea-bordered @error('title') textarea-error @enderror" placeholder="Content here"></textarea>
+                        @error('body')
+                            <label class="label">
+                                <span class="label-text-alt text-error">{{$message}}</span>
+                            </label>
+                        @enderror
                     </div>
                     <input type="submit" value="Create" class="btn btn-primary mt-3">
                 </form>
