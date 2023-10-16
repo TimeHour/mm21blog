@@ -18,6 +18,15 @@ class ArticleController extends Controller
     }
 
     /**
+     * Display a listing of the deleted resource.
+     */
+    public function deleted()
+    {
+        $articles = Article::onlyTrashed()->orderBy('deleted_at')->paginate();
+        return view('articles.index', compact('articles'));
+    }
+
+    /**
      * Show the form for creating a new resource.
      */
     public function create()
@@ -31,7 +40,9 @@ class ArticleController extends Controller
     public function store(StoreArticleRequest $request)
     {
 
+        dd($request->file('image')->store('/public'));
         $article = new Article($request->validated());
+
         $article->save();
         return redirect()->route('articles.index');
     }
