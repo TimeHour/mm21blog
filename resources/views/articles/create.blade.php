@@ -30,6 +30,21 @@
                             </label>
                         @enderror
                     </div>
+                    <div class="form-control w-full max-w-xs">
+                        <label class="label">
+                            <span class="label-text">Tags</span>
+                        </label>
+                        <select multiple class="select select-bordered" name="tags[]">
+                            @foreach($tags as $tag)
+                                <option value="{{$tag->id}}">{{$tag->name}}</option>
+                            @endforeach
+                        </select>
+                        @error('tags.*')
+                            <label class="label">
+                                <span class="label-text-alt text-error">{{$message}}</span>
+                            </label>
+                        @enderror
+                    </div>
                     <div class="form-control w-full">
                         <label class="label">
                             <span class="label-text">Images</span>

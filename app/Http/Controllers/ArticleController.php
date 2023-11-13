@@ -6,6 +6,7 @@ use App\Models\Article;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use App\Models\Image;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 
@@ -35,7 +36,8 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        return view('articles.create');
+        $tags = Tag::all();
+        return view('articles.create', compact('tags'));
     }
 
     /**
@@ -43,7 +45,6 @@ class ArticleController extends Controller
      */
     public function store(StoreArticleRequest $request)
     {
-
         $article = new Article($request->validated());
         $article->user()->associate(auth()->user());
         $article->save();
@@ -55,6 +56,12 @@ class ArticleController extends Controller
                 $img->path = Storage::url($file);
                 $img->article()->associate($article);
                 $img->save();
+            }
+        }
+
+        if($request->input('tags')){
+            foreach($request->input('tags') as $tagId){
+                $article->tags()->attach($tagId);
             }
         }
         return redirect()->route('articles.index');
